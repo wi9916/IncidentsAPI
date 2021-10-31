@@ -17,15 +17,15 @@ namespace IncidentsAPI.Services
         {
             Database.EnsureCreated();
         }
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    builder.Entity<Incident>()
-        //        .HasMany(p => p.Accounts)
-        //        .WithOne(c => c.Incedent);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Incident>()
+                .HasMany(p => p.Accounts)
+                .WithOne(c => c.Incedent);
 
-        //    builder.Entity<Account>()
-        //        .HasMany(p => p.Contacts)
-        //        .WithOne(c => c.Account);
-        //}
+            builder.Entity<Account>()
+                .HasMany(p => p.Contacts)
+                .WithOne(c => c.Account);
+        }
     }
 }

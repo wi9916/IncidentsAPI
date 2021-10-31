@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,20 +20,23 @@ namespace IncidentsAPI.Services
             _db.Set<T>().Add(item);
         }
 
-        public List<T> Get<T>(T item) where T : class
+        //public List<T> Get<T>(T item) where T : class
+        //{
+        //    var objs = new List<T>();
+        //    foreach (var obj in _db.Set<T>())
+        //        objs.Add(Get(obj, true));
+
+        //    return objs;
+        //}
+
+        //public T Get<T>(T item, bool kay) where T : class
+        //{
+        //    return _db.Set<T>().Find(item);
+        //}
+        public T Get<T>(T item, string kay) where T : class
         {
-            var objs = new List<T>();
-            foreach (var obj in _db.Set<T>())
-                objs.Add(Get(obj,true));
-
-            return objs;
+            return _db.Set<T>().Find(kay);
         }
-
-        public T Get<T>(T item, bool kay) where T : class
-        {
-            return _db.Set<T>().Find(item);
-        }
-
         public void Edit<T>(T item) where T : class
         {
             var odj = _db.Set<T>().Find(item);
@@ -45,11 +49,11 @@ namespace IncidentsAPI.Services
             Save();
         }
 
-        public void Delete<T>(T item) where T : class
+        public void Delete<T>(T item,string kay) where T : class
         {
-            var obj = _db.Set<T>().Find(item);
+            var obj = _db.Set<T>().Find(kay);
             if (obj != null)
-                _db.Set<T>().Remove(item);
+                _db.Set<T>().Remove(obj);
         }
 
         public void Save()

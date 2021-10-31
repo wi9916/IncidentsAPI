@@ -11,6 +11,7 @@ namespace IncidentsAPI.Models
         [Key]
         public string Name { get; set; }
         public Incident Incedent { get; set; }
+        [Required]
         public IEnumerable<Contact> Contacts { get; set; }
     }
 }

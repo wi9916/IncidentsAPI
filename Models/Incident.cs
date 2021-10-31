@@ -12,6 +12,8 @@ namespace IncidentsAPI.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string IncidentName { get; set; }
         public string Description { get; set; }
+
+        [Required]
         public IEnumerable<Account> Accounts { get; set; }
     }
 }
