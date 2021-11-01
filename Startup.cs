@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IncidentsAPI.Interfaces;
 
 namespace IncidentsAPI
 {
@@ -28,7 +29,8 @@ namespace IncidentsAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<DataContext>();
-            services.AddScoped<DataService>();
+            services.AddScoped<IDataService, DataService>();
+            services.AddScoped<IIncidentService, IncidentService>();
 
             services.AddDbContext<DataContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("DbConnectionStrings")));

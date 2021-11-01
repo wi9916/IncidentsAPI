@@ -12,6 +12,6 @@ namespace IncidentsAPI.Models
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Account Account { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

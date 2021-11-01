@@ -14,6 +14,6 @@ namespace IncidentsAPI.Models
         public string Description { get; set; }
 
         [Required]
-        public IEnumerable<Account> Accounts { get; set; }
+        public virtual IEnumerable<Account> Accounts { get; set; }
     }
 }

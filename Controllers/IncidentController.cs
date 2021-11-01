@@ -1,4 +1,5 @@
-﻿using IncidentsAPI.Models;
+﻿using IncidentsAPI.Interfaces;
+using IncidentsAPI.Models;
 using IncidentsAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -13,50 +14,19 @@ namespace IncidentsAPI.Controllers
     [Route("[controller]")]
     public class IncidentController : ControllerBase
     {        
-        private readonly DataService _context;
+        private readonly IIncidentService _context;
 
-        public IncidentController(DataService context)
+        public IncidentController(IIncidentService context)
         {
             _context = context;
         }
 
-        //[HttpGet("GetIncidents")]
-        //public IEnumerable<Incident> GetIncidents()
-        //{
-        //    return _context.Get(new Incident());
-        //}
-
-        //[HttpGet("GetAccounts")]
-        //public IEnumerable<Account> GetAccounts()
-        //{
-        //    return _context.Get(new Account());
-        //}
-
-        //[HttpGet("GetContacts")]
-        //public IEnumerable<Contact> GetContacts()
-        //{
-        //    return _context.Get(new Contact());
-        //}
-
         [HttpPost("AddIncident")]
         public IActionResult Add(Incident item)
         {
-            var accounts = item.Accounts.ToList();
-            for (var i = 0; i < item.Accounts.Count(); i++)
-            {
-                var account = _context.Get(new Account(), accounts[i].Name);
-                if (account is not null)
-                {
-                    accounts[i] = account;
-                    _context.Delete(new Account(), accounts[i].Name);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-
-            _context.Add(item);
+            if (!_context.AddIncident(item))          
+                return NotFound();
+           
             _context.Save();
             return Ok();
         }
@@ -64,23 +34,9 @@ namespace IncidentsAPI.Controllers
         [HttpPost("AddAccount")]
         public IActionResult Add(Account item)
         {
-            if (_context.Get(new Account(), item.Name) is not null)
+            if (!_context.AddAccount(item))
                 return BadRequest();
-
-            var contacts = item.Contacts.ToList();
-            for (var i = 0; i < contacts.Count(); i++)
-            {
-                var contact = _context.Get(new Contact(), contacts[i].Email);
-                if (contact is not null)
-                {
-                    contacts[i] = contact;
-                    _context.Delete(new Contact(), contact.Email);                    
-                }
-            }
-            _context.Save();
-
-            item.Contacts = contacts;
-            _context.Add(item);
+           
             _context.Save();
             return Ok();
         }
@@ -88,10 +44,9 @@ namespace IncidentsAPI.Controllers
         [HttpPost("AddContact")]
         public IActionResult Add(Contact item)
         {
-            if(_context.Get(new Contact(), item.Email) is not null)
+            if (!_context.AddContact(item))
                 return BadRequest();
 
-            _context.Add(item);
             _context.Save();
             return Ok();
         }

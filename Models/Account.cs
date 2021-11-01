@@ -10,8 +10,7 @@ namespace IncidentsAPI.Models
     {
         [Key]
         public string Name { get; set; }
-        public Incident Incedent { get; set; }
-        [Required]
-        public IEnumerable<Contact> Contacts { get; set; }
+        public virtual Incident Incedent { get; set; }
+        public virtual IEnumerable<Contact> Contacts { get; set; }
     }
 }
