@@ -14,10 +14,12 @@ namespace IncidentsAPI.Services
         {
             _context = context;
         }
+
         public Incident Get(Incident item)
         {
             return _context.Get(item);
         }
+
         public void Add<T>(T item) where T : class
         {
             _context.Add(item);
@@ -91,11 +93,6 @@ namespace IncidentsAPI.Services
         public void Save()
         {
             _context.Save();
-        }
-
-        public T Get<T>(T item, string kay) where T : class
-        {
-            throw new NotImplementedException();
         }
     }
 }

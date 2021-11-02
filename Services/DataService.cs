@@ -34,6 +34,7 @@ namespace IncidentsAPI.Services
 
             return obj;
         }
+
         public Account Get(Account item) 
         {
             var obj = _db.Set<Account>().Find(item.Name);
@@ -42,11 +43,13 @@ namespace IncidentsAPI.Services
 
             return obj;
         }
+
         public Contact Get(Contact item) 
         {
             var obj = _db.Set<Contact>().Find(item.Email);
             return obj;
         }
+
         public void Edit<T>(T item) where T : class
         {
             var odj = _db.Set<T>().Find(item);

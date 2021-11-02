@@ -17,6 +17,7 @@ namespace IncidentsAPI.Services
         {
             Database.EnsureCreated();
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Incident>()
